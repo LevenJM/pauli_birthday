@@ -22,6 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const flame = document.getElementById('flame');
     flame.addEventListener('click', blowOutCandle);
 
+    // 6. Baby Reveal
+    setupBabyReveal();
+
     // Initial Confetti
     setTimeout(burstConfetti, 1000);
 });
@@ -225,5 +228,52 @@ function blowOutCandle() {
         setTimeout(() => {
             flame.classList.remove('out');
         }, 5000);
+    }
+}
+
+function setupBabyReveal() {
+    const babyBtn = document.getElementById("babyBtn");
+    const babyOverlay = document.getElementById("babyOverlay");
+    const babyClose = document.getElementById("babyClose");
+    const floatingHeartsEl = document.getElementById("floatingHearts");
+
+    if (!babyBtn || !babyOverlay) return;
+
+    babyBtn.addEventListener("click", openOverlay);
+    babyClose.addEventListener("click", closeOverlay);
+    babyOverlay.addEventListener("click", (e) => {
+        if (e.target === babyOverlay) closeOverlay();
+    });
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeOverlay();
+    });
+
+    function openOverlay() {
+        babyOverlay.classList.add("active");
+        babyOverlay.setAttribute("aria-hidden", "false");
+        spawnHearts();
+    }
+
+    function closeOverlay() {
+        babyOverlay.classList.remove("active");
+        babyOverlay.setAttribute("aria-hidden", "true");
+        floatingHeartsEl.innerHTML = "";
+    }
+
+    function spawnHearts() {
+        floatingHeartsEl.innerHTML = "";
+        const icons = ["💙", "⭐", "🌟", "💫", "👶", "💙", "💙", "✨"];
+        const count = window.innerWidth < 600 ? 16 : 28;
+        for (let i = 0; i < count; i += 1) {
+            const el = document.createElement("span");
+            el.className = "fh";
+            el.setAttribute("aria-hidden", "true");
+            el.textContent = icons[Math.floor(Math.random() * icons.length)];
+            const size = Math.random() * 18 + 16;
+            const dur = Math.random() * 4 + 4;
+            const delay = Math.random() * 3;
+            el.style.cssText = `--left: ${(Math.random() * 94).toFixed(1)}%; --fs: ${size.toFixed(0)}px; --dur: ${dur.toFixed(1)}s; --delay: ${delay.toFixed(1)}s`;
+            floatingHeartsEl.appendChild(el);
+        }
     }
 }

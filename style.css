@@ -88,11 +88,126 @@ body {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
-.hero-content .subtitle {
-    font-size: 1.8rem;
-    margin-bottom: 40px;
-    color: var(--primary-pink);
-    font-weight: 700;
+.hero-btns {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-alt {
+    background-color: var(--dark-pink);
+    box-shadow: 0 4px 15px rgba(214, 51, 132, 0.3);
+}
+
+.btn-alt:hover {
+    background-color: var(--primary-pink);
+}
+
+/* Baby Reveal Overlay */
+.baby-overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(160deg, #ffeef8 0%, #e8f4ff 60%, #f0f8ff 100%);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 400ms ease;
+}
+
+.baby-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.baby-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(199, 48, 112, 0.2);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 150ms;
+    z-index: 2100;
+}
+
+.baby-close:hover {
+    background: white;
+}
+
+.baby-inner {
+    text-align: center;
+    padding: 24px;
+    position: relative;
+    z-index: 2002;
+}
+
+.baby-emoji {
+    font-size: clamp(5rem, 14vw, 8rem);
+    display: block;
+    line-height: 1;
+    margin-bottom: 10px;
+    animation: babyBounce 1.6s ease-in-out infinite;
+}
+
+@keyframes babyBounce {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-16px) rotate(3deg); }
+}
+
+.baby-hearts {
+    font-size: 1.5rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 20px;
+}
+
+.baby-msg {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: #2c1520;
+    margin-bottom: 10px;
+}
+
+.baby-sub {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.floating-hearts {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2001;
+    overflow: hidden;
+}
+
+.fh {
+    position: absolute;
+    bottom: -50px;
+    left: var(--left);
+    font-size: var(--fs);
+    animation: rise var(--dur) ease-in infinite;
+    animation-delay: var(--delay);
+    opacity: 0;
+}
+
+@keyframes rise {
+    0% { transform: translateY(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-110vh); opacity: 0; }
 }
 
 .btn {

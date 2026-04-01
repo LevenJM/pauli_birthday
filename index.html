@@ -16,7 +16,10 @@
         <div class="hero-content">
             <h1 class="dancing-script">Happy 35th Birthday Paulina!</h1>
             <p class="subtitle">35 Years of Wonderful You</p>
-            <button id="start-btn" class="btn">Let's Celebrate!</button>
+            <div class="hero-btns">
+                <button id="start-btn" class="btn">Let's Celebrate!</button>
+                <button id="babyBtn" class="btn btn-alt">A Little Surprise&thinsp;💙</button>
+            </div>
         </div>
     </header>
 
@@ -74,6 +77,17 @@
             <p class="footer-small">Made with ❤️ for Pauli's 35th Birthday</p>
         </div>
     </footer>
+
+    <div id="babyOverlay" class="baby-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+        <button class="baby-close" id="babyClose" aria-label="Close">✕</button>
+        <div class="floating-hearts" id="floatingHearts" aria-hidden="true"></div>
+        <div class="baby-inner">
+            <span class="baby-emoji">👶</span>
+            <div class="baby-hearts">💙 💙 💙</div>
+            <p class="baby-msg">A baby boy is on his way!</p>
+            <p class="baby-sub">Coming soon to complete our little family&thinsp;🌟</p>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
