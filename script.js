@@ -1,0 +1,229 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Load Content
+    loadMessage();
+    loadTimeline();
+    loadGallery();
+
+    // 2. Floating Elements
+    createBalloons(15);
+    createHearts(15);
+
+    // 3. Fade-in on Scroll
+    initScrollAnimations();
+
+    // 4. Hero Button
+    const startBtn = document.getElementById('start-btn');
+    startBtn.addEventListener('click', () => {
+        document.getElementById('message-section').scrollIntoView({ behavior: 'smooth' });
+        burstConfetti();
+    });
+
+    // 5. Candle Interaction
+    const flame = document.getElementById('flame');
+    flame.addEventListener('click', blowOutCandle);
+
+    // Initial Confetti
+    setTimeout(burstConfetti, 1000);
+});
+
+async function loadMessage() {
+    try {
+        const response = await fetch('message.txt');
+        const text = await response.text();
+        const container = document.getElementById('message-content');
+        
+        const paragraphs = text.split('\n\n');
+        container.innerHTML = paragraphs.map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
+    } catch (error) {
+        console.error('Error loading message:', error);
+    }
+}
+
+function loadTimeline() {
+    const events = [
+        {
+            year: "11 Birthdays Together",
+            text: "Eleven beautiful years of celebrating you. Year after year, your day keeps getting better because we keep building a life worth celebrating.",
+            side: "left"
+        },
+        {
+            year: "2024: Our First Home",
+            text: "The year we turned a dream into reality. Buying our home together was the start of our forever sanctuary.",
+            side: "right"
+        },
+        {
+            year: "2025: Renovating with Love",
+            text: "Poured our hearts into every corner of our house. Hand in hand, we built the foundation for our future.",
+            side: "left"
+        },
+        {
+            year: "2026: Our Greatest Adventure",
+            text: "Embarking on our most significant chapter yet—welcoming our child together. You are going to be the most incredible mother.",
+            side: "right"
+        }
+    ];
+
+    const timeline = document.getElementById('timeline');
+    events.forEach(event => {
+        const item = document.createElement('div');
+        item.className = `timeline-item ${event.side} fade-in`;
+        
+        const content = document.createElement('div');
+        content.className = 'timeline-content';
+        
+        const h3 = document.createElement('h3');
+        h3.textContent = event.year;
+        
+        const p = document.createElement('p');
+        p.textContent = event.text;
+        
+        content.appendChild(h3);
+        content.appendChild(p);
+        item.appendChild(content);
+        timeline.appendChild(item);
+    });
+}
+
+function loadGallery() {
+    const images = [
+        '1c9b5d20-2202-4a5d-9045-eff513a979a3.jpg',
+        'IMG_0433.jpg',
+        'IMG_0656.jpg',
+        'IMG_0793.jpg',
+        'IMG_1093.jpg',
+        'IMG_1272.jpg',
+        'IMG_1519.jpg',
+        'IMG_1602.jpg',
+        'IMG_2009.jpg',
+        'IMG_20200813_222443.jpg',
+        'IMG_20211216_182254.jpg',
+        'IMG_20220412_192807.jpg',
+        'IMG_2865.jpg',
+        'IMG_3405.jpg',
+        'IMG_3661.jpg',
+        'IMG_4561.jpg',
+        'IMG_4914.jpg',
+        'IMG_5653.jpg',
+        'IMG_6209.JPG',
+        'IMG_8057.JPG',
+        'IMG_9964.JPG'
+    ];
+
+    const grid = document.getElementById('gallery-grid');
+    images.forEach(imgName => {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        
+        const img = document.createElement('img');
+        img.src = `images/${imgName}`;
+        img.alt = 'Memory with Paulina';
+        img.loading = 'lazy';
+        
+        item.appendChild(img);
+        grid.appendChild(item);
+    });
+}
+
+function createHearts(count) {
+    const container = document.getElementById('balloons-container');
+    const hearts = ['❤️', '💖', '💗', '💓', '💕'];
+
+    for (let i = 0; i < count; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+        
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.fontSize = `${Math.random() * (30 - 15) + 15}px`;
+        
+        const duration = Math.random() * (15 - 8) + 8;
+        heart.style.animationDuration = `${duration}s`;
+        heart.style.animationDelay = `${Math.random() * 10}s`;
+        
+        container.appendChild(heart);
+    }
+}
+
+function createBalloons(count) {
+    const container = document.getElementById('balloons-container');
+    const colors = ['#ff4d94', '#ff80bf', '#ffccd5', '#d63384', '#ffb3d9'];
+
+    for (let i = 0; i < count; i++) {
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        
+        const size = Math.random() * (60 - 30) + 30;
+        balloon.style.width = `${size}px`;
+        balloon.style.height = `${size * 1.2}px`;
+        
+        balloon.style.left = `${Math.random() * 100}%`;
+        balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        const duration = Math.random() * (20 - 10) + 10;
+        balloon.style.animationName = 'float-up';
+        balloon.style.animationDuration = `${duration}s`;
+        balloon.style.animationDelay = `${Math.random() * 10}s`;
+        
+        container.appendChild(balloon);
+    }
+}
+
+function initScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('appear');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+}
+
+function burstConfetti() {
+    confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#ff4d94', '#ffccd5', '#d63384', '#ffffff', '#d4af37']
+    });
+}
+
+function blowOutCandle() {
+    const flame = document.getElementById('flame');
+    if (!flame.classList.contains('out')) {
+        flame.classList.add('out');
+        
+        const duration = 3 * 1000;
+        const end = Date.now() + duration;
+
+        (function frame() {
+            confetti({
+                particleCount: 5,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 },
+                colors: ['#ff4d94', '#ffccd5']
+            });
+            confetti({
+                particleCount: 5,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 },
+                colors: ['#d63384', '#d4af37']
+            });
+
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+        }());
+
+        setTimeout(() => {
+            flame.classList.remove('out');
+        }, 5000);
+    }
+}
