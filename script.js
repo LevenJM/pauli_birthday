@@ -172,20 +172,28 @@ function createBalloons(count) {
 }
 
 function initScrollAnimations() {
+    const fadeEls = document.querySelectorAll('.fade-in');
+    
     const observerOptions = {
-        threshold: 0.05,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.01,
+        rootMargin: '0px 0px 100px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('appear');
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    fadeEls.forEach(el => observer.observe(el));
+
+    // Force reveal elements after a delay if they haven't appeared (mobile fix)
+    setTimeout(() => {
+        fadeEls.forEach(el => el.classList.add('appear'));
+    }, 2000);
 }
 
 function burstConfetti() {
