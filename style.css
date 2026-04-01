@@ -121,12 +121,21 @@ body {
     z-index: 2002;
 }
 
-.baby-emoji {
-    font-size: clamp(5rem, 14vw, 8rem);
-    display: block;
-    line-height: 1;
-    margin-bottom: 10px;
+.baby-image-wrap {
+    width: clamp(200px, 40vw, 300px);
+    height: clamp(200px, 40vw, 300px);
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 8px solid white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     animation: babyBounce 1.6s ease-in-out infinite;
+}
+
+.baby-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 @keyframes babyBounce {
